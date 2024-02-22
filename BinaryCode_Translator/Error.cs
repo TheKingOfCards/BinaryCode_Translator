@@ -4,12 +4,12 @@ public class Error
     {
         string error = "";
 
-        if (errorType == "IL") error = "Invalid length of binary code: Conversion might be wrong";
+        if (errorType == "IL") error = "Invalid length of binary code";
 
-        if (errorType == "WC") error = "Invalid charakter in code: Conversion could not be done";
+        if (errorType == "WC") error = "Invalid charakter in code";
 
-        if (errorType == "Range") error = "Invalid size of decimal: Conversion could not be done";
+        if (errorType == "Range") error = "Invalid size of decimal";
 
-        Console.WriteLine("ERROR: " + error);
+        Console.WriteLine($"ERROR: {error} -- Conversion could not be done" );
     }
 }

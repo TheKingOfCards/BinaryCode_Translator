@@ -21,33 +21,29 @@ public class BinaryConversion
     }
 
 
-    void Conversion() //When user wants to convert binary to decimal
+    void Conversion() // Binary => Decimal
     {
         input = input.Replace(" ", "");
         bits = input.ToList();
 
         CheckBinaryCode();
 
-        while (bits.Count >= 8) //* Runs when bits has higer count than 8
+        CheckLength();
+
+        while (bits.Count >= 8) // Runs when bits has higer count than 8
         {
             calcBits.Clear();
 
-            for (int i = 0; i < 8; i++) //Puts 8 elements from bits into calcBits to be converted
+            for (int i = 0; i < 8; i++) // Puts 8 elements from bits into calcBits to be printed into strings
             {
                 calcBits.Add(bits[0]);
                 bits.RemoveAt(0);
             }
 
-            Console.Write(CalculateBinary() + " "); //Writes calculated byte and a space for seperation
+            Console.Write(CalculateBinary() + " "); // Writes calculated byte and a space for seperation
         }
 
         Console.WriteLine(" ");
-
-
-        if (bits.Count != 0) //Error checking
-        {
-            error.ErrorCode("IL");
-        }
     }
 
 
@@ -61,19 +57,18 @@ public class BinaryConversion
         exponent = 7;
 
 
-
         foreach (char bit in calcBits) // Converts binary to decimal
         {
             double tempAddition = 0;
 
-            if (bit == '1') //* if it's a 1 times it with a 2 to the power of the current exponent and and it to finishedNumb 
+            if (bit == '1') //* if it's a 1 it times it with a 2 to the power of the current exponent and adds it to finishedNumb 
             {
                 tempAddition = Math.Pow(2, exponent);
 
                 finishedNumb += tempAddition;
             }
 
-            exponent--;
+            exponent--; // It's -- because the binary code is calculated backwards 
         }
 
         finish = finishedNumb.ToString();
@@ -86,17 +81,47 @@ public class BinaryConversion
     {
         foreach (char bit in bits)
         {
-            if (bit != '1' && bit != '0' && bit != ' ')
+            if (bit != '1' && bit != '0')
             {
                 wrongCharcter = true;
             }
         }
 
-        if (wrongCharcter) 
+        if (wrongCharcter)
         {
             bits.Clear();
 
             error.ErrorCode("WC");
+        }
+    }
+
+
+    void CheckLength() // Checks length of binary code to se if it's a mutliple of 8
+    {
+        bool checkingLength = true;
+
+        int checkNum = 0;
+
+        while (checkingLength)
+        {
+            checkingLength = true;
+
+            if (checkNum < bits.Count) // Adds 8 to the checker if it's lower than bits count
+            {
+                checkNum += 8;
+            }
+
+            if (checkNum == bits.Count) // If bits count is a multiple of 8
+            {
+                checkingLength = false;
+            }
+
+            if (checkNum > bits.Count) // If bits count is not an multiple of 8
+            {
+                bits.Clear();
+                error.ErrorCode("IL");
+                checkingLength = false;
+            }
         }
     }
 }

@@ -5,9 +5,6 @@ public class Calculator
     string input = "";
 
 
-
-    List<char> tempNumber = new();
-
     DecimalConversion decmial = new();
 
     BinaryConversion binary = new();

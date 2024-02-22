@@ -17,7 +17,7 @@ public class DecimalConversion
     }
 
 
-    void Conversion()
+    void Conversion() //Decimal => Binary
     {
         tempNumber = input.ToList();
 

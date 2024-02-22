@@ -23,7 +23,7 @@ public class TakeInput
 
         if (i == "")
         {
-            Console.WriteLine("You idiot, type something");
+            Console.WriteLine("Type something");
             Console.ReadKey();
             Environment.Exit(0);
         }
