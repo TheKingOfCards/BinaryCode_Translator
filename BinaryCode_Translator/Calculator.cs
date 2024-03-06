@@ -2,25 +2,17 @@ using System.Reflection.Metadata;
 
 public class Calculator
 {
-    string input = "";
-
-
     DecimalConversion decmial = new();
 
     BinaryConversion binary = new();
 
 
-    public void Update(string i, bool binaryBool)
+    public void Update(string input, bool binaryBool)
     {
-        input = i;
-        if (binaryBool == true)
-        {
-            binary.Update(input);
-        }
-        else
-        {
-            decmial.Update(input);
-        }
+        if (binaryBool == true) binary.Calculate(input);
+
+        else decmial.Calculate(input);
+
         Console.ReadKey();
     }
 }

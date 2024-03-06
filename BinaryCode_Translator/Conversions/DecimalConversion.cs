@@ -1,104 +1,95 @@
 public class DecimalConversion
 {
-    string input = "";
+    private List<char> _inputList = new();
 
-    bool wrongCharcter = false;
-    bool decimalDone = false;
 
-    List<char> tempNumber = new();
-
-    readonly Error error = new();
-
-    public void Update(string i)
+    public void Calculate(string input)
     {
-        input = i;
-        
-        Conversion();
+        _inputList = input.ToList();
+
+        ConvertDecimalToBinary();
     }
 
 
-    void Conversion() //Decimal => Binary
+    void ConvertDecimalToBinary() //Decimal to Binary
     {
-        tempNumber = input.ToList();
-
-        CheckDecimal();
-
-        while (!decimalDone)
+        while (IsValidInput(_inputList))
         {
-            string userNumS = "";
+            string userNumberString = ""; //* Must not contain anything
 
-            bool convertedCurrentNum = false;
+            while (_inputList[0] == ' ') _inputList.RemoveAt(0); // Removes spaces from list
 
 
-            while (!convertedCurrentNum && tempNumber.Count > 0) //Puts one number in a temporary string
+            bool convertedCurrentNumber = false;
+            while (!convertedCurrentNumber && _inputList.Count > 0)
             {
-                if (tempNumber[0] != ' ')
+                if (_inputList[0] != ' ') // If the first char in the list is a number and adds to string
                 {
-                    userNumS += tempNumber[0];
+                    userNumberString += _inputList[0];
+                    _inputList.RemoveAt(0);
                 }
-
-                if (tempNumber[0] == ' ')
+                else if (_inputList[0] == ' ') // End if user has placed a space 
                 {
-                    convertedCurrentNum = true;
+                    convertedCurrentNumber = true;
                 }
-
-                tempNumber.RemoveAt(0);
-
             }
 
             //Changes the temporary number into a int that is sent to the calculate method
-            int userNum = int.Parse(userNumS);
+            int userNumber = int.Parse(userNumberString);
 
-            CalculateDecimal(userNum);
-
-
-            if (tempNumber.Count == 0) //Chekcs if the list with everything is empty
-            {
-                decimalDone = true;
-            }
+            CalculateBinaryRepresentation(userNumber);
         }
 
     }
 
 
-    void CalculateDecimal(int calcUserNum)
+    void CalculateBinaryRepresentation(int currentNumber)
     {
         int compareNum = 128;
 
-        bool hasPlaced0 = false;
-        
+        bool hasPlacedZero = false; // Bool for if a 0 has been places (used to check so that a 1 is not accidentaly placed)
 
-        if (calcUserNum <= 255)
+
+        if (currentNumber <= 255)
         {
             for (int i = 0; i < 8; i++)
             {
-                if (compareNum > calcUserNum)
+                if (compareNum > currentNumber) // Checks if user number is currently bigger than compareNum and if its is places a 0
                 {
                     compareNum /= 2;
                     Console.Write('0');
-                    hasPlaced0 = true;
+                    hasPlacedZero = true;
                 }
 
-                if (compareNum <= calcUserNum && hasPlaced0 == false)
+                if (compareNum <= currentNumber && hasPlacedZero == false) // Reverese than above and checks if a zero has been placed
                 {
-                    calcUserNum -= compareNum;
+                    currentNumber -= compareNum;
                     compareNum /= 2;
                     Console.Write('1');
                 }
-                hasPlaced0 = false;
+
+                hasPlacedZero = false;
             }
-            Console.WriteLine(" ");
+            Console.Write(" "); // Space between binary codes
         }
-        else
+        else // If the user has written a number larger than 255
         {
-            error.ErrorCode("Range");
+            Error.PrintError("Range");
+            _inputList.Clear();
         }
     }
 
 
-    void CheckDecimal()
+    static bool IsValidInput(List<char> checkList) // Checks if the input contains anything other than numbers
     {
-        foreach (char num in tempNumber)
+        bool wrongCharcter = false;
+
+        if (checkList.Count == 0)
+        {
+            return false;
+        }
+
+        foreach (char num in checkList)
         {
             if (num != '0' && num != '1' && num != '2' && num != '3' && num != '4' && num != '5' && num != '6' && num != '7' && num != '8' && num != '9' && num != ' ')
             {
@@ -106,14 +97,11 @@ public class DecimalConversion
             }
         }
 
-        if (wrongCharcter == true)
+        if (wrongCharcter == true) // return false
         {
-            decimalDone = true;
-            error.ErrorCode("WC");
+            Error.PrintError("WC"); // Wrong character error code
+            return false;
         }
-        else
-        {
-            decimalDone = false;
-        }
+        else return true;
     }
 }

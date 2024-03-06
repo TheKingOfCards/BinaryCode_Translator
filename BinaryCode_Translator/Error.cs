@@ -1,12 +1,12 @@
-public class Error
+public static class Error
 {
-    public void ErrorCode(string errorType)
+    public static void PrintError(string errorType)
     {
         string error = "";
 
         if (errorType == "IL") error = "Invalid length of binary code";
 
-        if (errorType == "WC") error = "Invalid charakter in code";
+        if (errorType == "WC") error = "Invalid character in code";
 
         if (errorType == "Range") error = "Invalid size of decimal";
 

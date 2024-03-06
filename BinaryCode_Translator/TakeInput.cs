@@ -1,34 +1,38 @@
 public class TakeInput
 {
-    public bool binary;
+    public bool convertBinary;
 
 
-    public string Input()
+    public string GetInput()
     {
-        string i = "";
-
         ChooseConversion();
 
-        if (binary)
-        {
-            Console.WriteLine("Write your binary code");
-        }
-        else
-        {
-            Console.WriteLine("Write your decimal number");
-            Console.WriteLine("Separate numbers by using space");
-        }
 
-        i = Console.ReadLine();
+        string input = "";
 
-        if (i == "")
+        while(input == "")
         {
-            Console.WriteLine("Type something");
-            Console.ReadKey();
-            Environment.Exit(0);
-        }
+            if (convertBinary)
+            {
+                Console.WriteLine("Write your binary code");
+            }
+            else
+            {
+                Console.WriteLine("Write your decimal number");
+                Console.WriteLine("Separate numbers by using space");
+            }
 
-        return i;
+            input = Console.ReadLine();
+        
+            if (input == "")
+            {
+                Console.WriteLine("Type something");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+        
+        return input;
     }
 
 
@@ -52,22 +56,21 @@ public class TakeInput
 
             if (input == '1')
             {
-                binary = true;
+                convertBinary = true;
             }
             else if (input == '2')
             {
-                binary = false;
+                convertBinary = false;
             }
-            else if (input == 'e')
+            else if (input.ToString().ToLower() == "e")
             {
                 Environment.Exit(0);
             }
             else
             {
-                Console.WriteLine("\nThat is not an option");
-                Console.ReadKey();
                 choosing = true;
             }
+
             Console.Clear();
         }
     }
